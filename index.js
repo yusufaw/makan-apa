@@ -15,6 +15,21 @@ app.listen(portAvailable, function () {
 
 bot.start((ctx) => ctx.reply('Welcome'))
 
+bot.command('about', (ctx) => {
+  ctx.reply('https://github.com/yusufaw/makan-apa')
+})
+
+bot.command('apa', (ctx) => {
+  store.getListEvent.then((result) => {
+    const randomIndex = between(0, result.food.length - 1);
+    const randomFood = result.food[randomIndex]
+    console.log(randomFood);
+    ctx.reply(randomFood);
+  }, (error) => {
+    rctx.reply("Terjadi kesalahan")
+  })
+})
+
 app.get('/', function (req, res) {
   store.getListEvent.then((result) => {
     const randomIndex = between(0, result.food.length - 1);
