@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source .env
+#source .env
 
 ssh root@$HOST_IP_ADDRESS<<EOF
     su fi0smith
