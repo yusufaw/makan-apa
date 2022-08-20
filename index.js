@@ -30,6 +30,22 @@ bot.command('apa', (ctx) => {
   })
 })
 
+bot.command('semua', (ctx) => {
+  store.getListEvent.then((result) => {
+    ctx.reply(result.food.join("\n"));
+  }, (error) => {
+    ctx.reply("Terjadi kesalahan")
+  })
+})
+
+app.get('/semua', function (req, res) {
+  store.getListEvent.then((result) => {
+    res.send(result.food.join("\n"));
+  }, (error) => {
+    res.send("Terjadi kesalahan")
+  })
+});
+
 app.get('/', function (req, res) {
   store.getListEvent.then((result) => {
     const randomIndex = between(0, result.food.length - 1);
