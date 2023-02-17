@@ -20,14 +20,7 @@ bot.command('about', (ctx) => {
 })
 
 bot.command('apa', (ctx) => {
-  store.getListEvent.then((result) => {
-    const randomIndex = between(0, result.food.length - 1);
-    const randomFood = result.food[randomIndex]
-    console.log(randomFood);
-    ctx.reply(randomFood);
-  }, (error) => {
-    rctx.reply("Terjadi kesalahan")
-  })
+  pickOneFood(ctx);
 })
 
 bot.command('semua', (ctx) => {
@@ -57,10 +50,28 @@ app.get('/', function (req, res) {
   })
 });
 
+bot.on('text', ctx => {
+  if (ctx.message.text.toLowerCase().includes("makan apa") || ctx.message.text.toLowerCase().includes("maem apa")) {
+    pickOneFood(ctx);
+  }
+})
+
 function between(min, max) {
   return Math.floor(
     Math.random() * (max - min + 1) + min
   )
+}
+
+function pickOneFood(ctx) {
+  store.getListEvent.then((result) => {
+    const randomIndex = between(0, result.food.length - 1);
+    const randomFood = result.food[randomIndex]
+    console.log(randomFood);
+    ctx.reply(randomFood);
+  }, (error) => {
+    console.log(error);
+    ctx.reply("Terjadi kesalahan");
+  })
 }
 
 bot.launch()
