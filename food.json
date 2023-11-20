@@ -23,6 +23,12 @@
         { "name": "Kedai Nusantara", "is_active": false },
         { "name": "Warteg Kharisma Bahari", "is_active": false },
         { "name": "Tahu Kupat", "is_active": false },
-        { "name": "Bakmi Bu Ties", "is_active": true }
+        { "name": "Bakmi Jawa Bu Tien - Tamantirto", "is_active": true },
+        { "name": "Paramount Asianfood - Sidoarum", "is_active": true },
+        { "name": "Nasgor 212 - Godean", "is_active": true },
+        { "name": "Ayam Srundeng Ceker Judes Azalea - Tamantirto", "is_active": true },
+        { "name": "Bakmi Jempol - Patukan", "is_active": true },
+        { "name": "Gudeg Ayam Kampung Mbak Rina - Patukan", "is_active": true },
+        { "name": "Pecel Level - Patukan", "is_active": true }
     ]
 }
