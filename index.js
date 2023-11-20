@@ -1,7 +1,7 @@
 const express = require('express');
 const store = require('./src/store.js');
-
 const { Telegraf } = require('telegraf')
+const { performance } = require("perf_hooks");
 require('dotenv').config();
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
@@ -51,9 +51,12 @@ app.get('/', function (req, res) {
 });
 
 bot.on('text', ctx => {
+  const start = performance.now();
   if (ctx.message.text.toLowerCase().includes("makan apa") || ctx.message.text.toLowerCase().includes("maem apa")) {
     pickOneFood(ctx);
   }
+  const end = performance.now();
+  console.log(`time taken: ${end - start}ms`);
 })
 
 function between(min, max) {
@@ -64,10 +67,11 @@ function between(min, max) {
 
 function pickOneFood(ctx) {
   store.getListEvent.then((result) => {
-    const randomIndex = between(0, result.food.length - 1);
-    const randomFood = result.food[randomIndex]
+    const activeFood = result.food.filter(food => food.is_active);
+    const randomIndex = between(0, activeFood.length - 1);
+    const randomFood = activeFood[randomIndex]
     console.log(randomFood);
-    ctx.reply(randomFood);
+    ctx.reply(randomFood.name);
   }, (error) => {
     console.log(error);
     ctx.reply("Terjadi kesalahan");
