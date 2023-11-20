@@ -66,7 +66,7 @@ function between(min, max) {
 }
 
 function pickOneFood(ctx) {
-  store.getListEvent.then((result) => {
+  store.getListFood.then((result) => {
     const activeFood = result.food.filter(food => food.is_active);
     const randomIndex = between(0, activeFood.length - 1);
     const randomFood = activeFood[randomIndex]
