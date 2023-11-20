@@ -52,7 +52,12 @@ app.get('/', function (req, res) {
 
 bot.on('text', ctx => {
   const start = performance.now();
-  if (ctx.message.text.toLowerCase().includes("makan apa") || ctx.message.text.toLowerCase().includes("maem apa")) {
+  const textMessage = ctx.message.text.toLowerCase();
+  if (textMessage.includes("makan apa") ||
+    textMessage.includes("maem apa") ||
+    textMessage.includes("lapar") ||
+    textMessage.includes("laper")
+  ) {
     pickOneFood(ctx);
   }
   const end = performance.now();
