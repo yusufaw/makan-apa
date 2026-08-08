@@ -7,21 +7,27 @@ to answer the eternal question: *"makan apa?"* ("what should I eat?").
 
 - The food list lives in [`food.json`](./food.json) — each entry has a
   `name` and an `is_active` flag. Only active entries are eligible when the
-  bot picks a random suggestion.
-- [`src/store.js`](./src/store.js) reads and parses `food.json` into a
-  promise (`getListFood`) used by both the bot and the HTTP server.
+  bot picks a random suggestion. The list is read and written on every
+  request, so `/tambah` and `/hapus` take effect immediately. (This is a
+  flat-file store for now; a database-backed store is planned for later.)
+- [`src/store.js`](./src/store.js) reads/writes `food.json` and exposes
+  `getListFood`, `addFood`, `removeFood`, and `searchFood`, used by both
+  the bot and the HTTP server.
 - [`index.js`](./index.js) wires everything together using
   [Telegraf](https://telegraf.js.org/) for the Telegram bot and
   [Express](https://expressjs.com/) for the HTTP server.
 
 ### Telegram bot commands
 
-| Command  | Behavior                                   |
-| -------- | ------------------------------------------- |
-| `/start` | Sends a welcome message                     |
-| `/about` | Sends a link to this repo                   |
-| `/apa`   | Replies with one random **active** food     |
-| `/semua` | Replies with the full food list             |
+| Command          | Behavior                                                  |
+| ----------------- | ---------------------------------------------------------- |
+| `/start`          | Sends a welcome message                                    |
+| `/about`          | Sends a link to this repo                                  |
+| `/apa`            | Replies with one random **active** food                    |
+| `/semua`          | Replies with the full food list                             |
+| `/tambah <nama>`  | Adds `<nama>` to the food list (active by default)          |
+| `/hapus <nama>`   | Removes `<nama>` from the food list (exact match, case-insensitive) |
+| `/cari <kata>`    | Searches the food list for names containing `<kata>`        |
 
 The bot also watches plain text messages: if a message contains
 `makan apa`, `maem apa`, `lapar`, or `laper` (case-insensitive), it replies
